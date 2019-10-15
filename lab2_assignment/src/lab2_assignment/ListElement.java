@@ -20,20 +20,26 @@ public void addElement(ListElement le,int data)
 	ListElement new_node = new ListElement();	
 	new_node.setData(data);
 	new_node.setNext(null);
+	new_node.setPrevious(null);
 	
 	
 	if (le.head == null)
 	{
+		new_node.previous = null;
 		le.head = new_node;	
 	}
 	else 
 	{
 		ListElement temp = le.head;
+		
 		while (temp.next != null)
 		{
 		temp=temp.next;
 		}
-		temp.next = new_node;	
+		
+		temp.next = new_node;
+		new_node.previous=temp;
+		
      }
 }
 
@@ -49,9 +55,32 @@ public ListElement getElement(ListElement ls,int index)
 	return temp;
 	
 }
-public ListElement deleteElement(int index)
+public ListElement deleteElement(ListElement ls,int index)
 {
+	ListElement curr =ls.head, prev=null;
 	
+	
+	if (curr != null && curr.data == index)//the index is in the head of list
+	{
+		ls.head = curr.next;//delete and assign new head
+		System.out.println(index + "deleted");
+		return ls;	
+	}
+	
+	while (curr != null && curr.data !=index)
+	{
+		prev=curr;
+		curr=curr.next;
+	}
+	if (curr != null && curr.data == index)
+	{
+		prev.next = curr.next;
+		System.out.println(index + "deleted");
+	}
+	if (curr == null)
+	{
+		System.out.println("notfound");
+	}
 	
 	
 	return next;
@@ -59,14 +88,19 @@ public ListElement deleteElement(int index)
 public void printLinkedListTail(ListElement ls)
 {
 	
+	ListElement curr = ls.head;
+	System.out.print("List: ");
 	
-	if (ls == null) return;
-
-	printLinkedListTail(ls.next);
-	System.out.print(ls.data + " ");
-
+	while (curr.next != null)
+	{
+		curr = curr.next;
+	}
+	while (curr != null)
+	{
+		System.out.print(curr.data + " ");
+	    curr = curr.previous;			
+	}	
 	
-		
 }
 public void printLinkedListHead(ListElement ls)
 {
@@ -124,9 +158,16 @@ public static void main(String[] args)
     
     
     ls.printLinkedListHead(ls);
- 
-    System.out.print("Reversed List: ");
-    //ls.printLinkedListTail(ls.head);
+    
+    ls.printLinkedListTail(ls);
+    //test get element
+    int x;
+    x=ls.getElement(ls, 3).previous.data;
+    System.out.print(x + " ");
+    
+    
+    ls.deleteElement(ls, 1);
+    ls.printLinkedListHead(ls);
 
 }
 }
