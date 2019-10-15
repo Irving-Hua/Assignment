@@ -126,7 +126,7 @@ public static void main(String[] args)
     ls.printLinkedListHead(ls);
  
     System.out.print("Reversed List: ");
-    ls.printLinkedListTail(ls.head);
+    //ls.printLinkedListTail(ls.head);
 
 }
 }
